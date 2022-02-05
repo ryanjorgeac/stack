@@ -7,3 +7,9 @@ class stack:
 
     def push(self,value):
         self.l.append(value)
+
+    def pop(self):
+        return self.l.pop()
+
+    def top(self):
+        return self.l[-1]
