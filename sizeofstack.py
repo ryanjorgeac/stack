@@ -1,5 +1,3 @@
-import stack
-
 def sizeofstack(start,auxiliar):
     sizeStart = 0
 
