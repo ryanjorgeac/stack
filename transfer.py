@@ -1,4 +1,5 @@
 import sizeofstack
+import stack
 
 def transfer_enesimo(n, p1, p2):
     for i in range(n-1):
@@ -16,3 +17,13 @@ def transfer(start, destination):
         x = sizeofstack.sizeofstack(start, destination)
         transfer_enesimo(x, start, destination)
     return
+
+def reverse_stack(p1):
+    x = p1
+    y = stack.stack()
+    transfer(x,y)
+    sizey = sizeofstack(y)
+    for i in range(sizey):
+        z = y.pop()
+        x.push(z)
+    return x

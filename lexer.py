@@ -22,7 +22,7 @@ class lexer():
                 aux = i
                 self.state = 2
 
-            elif i == " ":
+            elif i == " " and self.state == 0:
                 continue
 
             else:
@@ -40,6 +40,11 @@ class lexer():
             rc = (aux,"OPERATOR")
 
         self.state = 0
-        self.s = self.s[final_index:]
+
+        if final_index != 0:
+            self.s = self.s[final_index:]
+
+        else:
+            self.s = ""
 
         return rc
