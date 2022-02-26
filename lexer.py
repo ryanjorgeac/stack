@@ -17,6 +17,7 @@ class lexer():
 
             elif i in self.digits and self.state == 1:
                 aux += i
+                #cade o self.state???
 
             elif i in self.operators and self.state == 0:
                 aux = i

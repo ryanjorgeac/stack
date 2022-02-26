@@ -1,7 +1,5 @@
 import stack
-import lexer
 import transfer
-
 
 def fnotation(lexer):
     stackout = stack.stack()
@@ -25,3 +23,17 @@ def fnotation(lexer):
 
     transfer.reverse_stack(stackout)
     return stackout
+
+def fnotationSolver(stack_reverted):
+    numbers = stack.stack()
+    while not stack_reverted.isEmpty():
+        x = stack_reverted.pop()
+        if x[1] == "NUMBER":
+            numbers.push(int(x[0]))
+
+        else:
+            # usar dicionario para criar função que calcule utilizando os tokens +,/,%,-
+            pass
+
+    y = stack_reverted.pop()
+    return 3
