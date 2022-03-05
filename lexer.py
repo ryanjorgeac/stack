@@ -5,6 +5,9 @@ class lexer():
         self.state = 0
         self.digits = ["0","1","2","3","4","5","6","7","8","9"]
         self.operators = ["+","-","*","/"]
+        self.left_parentheses = ["("]
+        self.right_parentheses = [")"]
+
 
     def getnext(self):
         aux = ""
@@ -17,14 +20,23 @@ class lexer():
 
             elif i in self.digits and self.state == 1:
                 aux += i
-                #cade o self.state???
+
 
             elif i in self.operators and self.state == 0:
                 aux = i
                 self.state = 2
 
+            elif i in self.left_parentheses and self.state == 0:
+                aux = i
+                self.state = 3
+
+            elif i in self.right_parentheses and self.state == 0:
+                aux = i
+                self.state = 4
+
             elif i == " " and self.state == 0:
                 continue
+
 
             else:
                 break
@@ -39,6 +51,12 @@ class lexer():
 
         elif self.state == 2:
             rc = (aux,"OPERATOR")
+
+        elif self.state == 3:
+            rc = (aux,"LEFT_PARENTHESES")
+
+        elif self.state == 4:
+            rc = (aux,"RIGHT_PARENTHESES")
 
         self.state = 0
 

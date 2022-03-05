@@ -79,3 +79,14 @@ def test_1_plus_2():
     x.getnext()
     next4 = x.getnext()
     assert next4 == ("","END_OF_INPUT")
+
+def test_with_parentheses():
+    x = lexer.lexer("(1+2)*2")
+    x1 = x.getnext()
+    x.getnext()
+    x.getnext()
+    x.getnext()
+    x2 = x.getnext()
+    x.getnext()
+    x.getnext()
+    assert x1 == ("(","LEFT_PARENTHESES") and x2 == (")","RIGHT_PARENTHESES")

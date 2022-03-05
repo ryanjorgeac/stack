@@ -1,3 +1,7 @@
+import lexer
+import reverse_polish_notation
+
+
 def is_an_int(x):
     digits = ["0","1","2","3","4","5","6","7","8","9"]
     for i in x:
@@ -8,13 +12,11 @@ def is_an_int(x):
 
 def main(userIO):
     question = userIO.input("Write a number or an expression: ")
-    booleanquestion = is_an_int(question)
+    x = lexer.lexer(question)
+    y = reverse_polish_notation.polish_notation_conversor(x)
+    result = reverse_polish_notation.reverse_polish_notation_solver(y)
+    userIO.print(result)
 
-    if booleanquestion == True:
-        userIO.print(question)
-
-    else:
-        userIO.print("Can't calculate yet")
 
 class inputIO():
     def input(self,prompt):

@@ -1,7 +1,7 @@
 import stack
 import transfer
 
-def fnotation(lexer):
+def polish_notation_conversor(lexer):
     stackout = stack.stack()
     stackope = stack.stack()
     x = lexer.getnext()
@@ -24,16 +24,33 @@ def fnotation(lexer):
     transfer.reverse_stack(stackout)
     return stackout
 
-def fnotationSolver(stack_reverted):
+def reverse_polish_notation_solver(stack_reversed):
+    def add(num1,num2):
+        return num1+num2
+
+    def multiply(num1,num2):
+        return num1*num2
+
+    def subtract(num1,num2):
+        return num1-num2
+
+    def divide(num1,num2):
+        return num1/num2
+
+    operators = {"+":add,"*":multiply,"-":subtract,"/":divide}
+
     numbers = stack.stack()
-    while not stack_reverted.isEmpty():
-        x = stack_reverted.pop()
+
+    while not stack_reversed.isEmpty():
+        x = stack_reversed.pop()
         if x[1] == "NUMBER":
             numbers.push(int(x[0]))
 
         else:
-            # usar dicionario para criar função que calcule utilizando os tokens +,/,%,-
-            pass
+            firstNumber = numbers.pop()
+            secondNumber = numbers.pop()
+            operation = operators[x[0]](firstNumber,secondNumber)
+            numbers.push(operation)
 
-    y = stack_reverted.pop()
-    return 3
+    result = numbers.pop()
+    return result

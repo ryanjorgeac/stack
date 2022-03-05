@@ -92,7 +92,7 @@ def test_if_stack2_is_not_empty():
     stack1.push(3)
     stack1.push(4)
     stack1.push(5)
-    transfer(stack1, stack2)
+    transfer.transfer(stack1, stack2)
     assert not stack2.isEmpty()
 
 def test_if_stack2_is_reversed():
@@ -103,7 +103,7 @@ def test_if_stack2_is_reversed():
     stack1.push(3)
     stack1.push(4)
     stack1.push(5)
-    transfer(stack1, stack2)
+    transfer.transfer(stack1, stack2)
     x1 = stack2.pop()
     x2 = stack2.pop()
     x3 = stack2.pop()
@@ -116,7 +116,7 @@ def test_reverse_stack():
     stack1.push(1)
     stack1.push(2)
     stack1.push(3)
-    reverse_stack(stack1)
+    transfer.reverse_stack(stack1)
     x1 = stack1.pop()
     x2 = stack1.pop()
     x3 = stack1.pop()
