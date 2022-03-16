@@ -90,3 +90,4 @@ def test_with_parentheses():
     x.getnext()
     x.getnext()
     assert x1 == ("(","LEFT_PARENTHESES") and x2 == (")","RIGHT_PARENTHESES")
+

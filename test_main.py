@@ -2,7 +2,7 @@ import calculator
 
 class inputfake():
     def __init__(self):
-        self.inputlist = ["1"]
+        self.inputlist = ["exit","1"]
         self.outputlist = []
 
     def print(self, prompt):
@@ -14,7 +14,7 @@ class inputfake():
 def test_main_number():
     x = inputfake()
     calculator.main(x)
-    assert x.outputlist[0] == "1"
+    assert x.outputlist[0] == 1
 
 #def test_main_math():
     #x = input()

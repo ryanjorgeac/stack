@@ -1,6 +1,12 @@
 import stack
 import transfer
 
+
+def precedencia(operator):
+    dicio = {"+":10,"*":8,"-":9,"/":8}
+    return dicio[operator]
+
+
 def polish_notation_conversor(lexer):
     stackout = stack.stack()
     stackope = stack.stack()
@@ -10,7 +16,24 @@ def polish_notation_conversor(lexer):
             stackout.push(x)
 
         elif x[1] == "OPERATOR":
+            if not stackope.isEmpty() and stackope.top()[1] == "OPERATOR":
+                topOperator = stackope.top()
+                opeValue = precedencia(topOperator[0])
+                newOpeValue = precedencia(x[0])
+                if opeValue < newOpeValue:
+                    while not stackope.isEmpty():
+                        y = stackope.pop()
+                        stackout.push(y)
             stackope.push(x)
+
+        elif x[1] == "LEFT_PARENTHESES":
+            stackope.push(x)
+
+        elif x[1] == "RIGHT_PARENTHESES":
+            while stackope.top()[1] != "LEFT_PARENTHESES":
+                y = stackope.pop()
+                stackout.push(y)
+            stackope.pop()
 
         else:
             return stackout
@@ -32,7 +55,7 @@ def reverse_polish_notation_solver(stack_reversed):
         return num1*num2
 
     def subtract(num1,num2):
-        return num1-num2
+        return num2-num1
 
     def divide(num1,num2):
         return num1/num2

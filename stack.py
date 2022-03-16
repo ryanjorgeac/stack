@@ -13,3 +13,9 @@ class stack():
 
     def top(self):
         return self.l[-1]
+
+    def __str__(self):
+        stackStr = ""
+        for i in range(len(self.l)-1,-1,-1):
+            stackStr+= f"{self.l[i]} "
+        return stackStr
