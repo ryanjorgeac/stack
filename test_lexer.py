@@ -91,3 +91,37 @@ def test_with_parentheses():
     x.getnext()
     assert x1 == ("(","LEFT_PARENTHESES") and x2 == (")","RIGHT_PARENTHESES")
 
+def test_only_with_variables():
+    x = lexer.lexer("variable1")
+    x1 = x.getnext()
+    assert x1 == ("variable1","VARIABLE")
+
+def test_with_variable_in_an_expression():
+    x = lexer.lexer("batata+5")
+    x1 = x.getnext()
+    x2 = x.getnext()
+    x3 = x.getnext()
+    assert x1 == ("batata","VARIABLE") and x2 == ("+","OPERATOR") and x3 == ("5","NUMBER")
+
+def test_with_variable_in_an_expression2():
+    x = lexer.lexer("batata5*42+x")
+    x1 = x.getnext()
+    x2 = x.getnext()
+    x3 = x.getnext()
+    x4 = x.getnext()
+    x5 = x.getnext()
+    assert x1 == ("batata5","VARIABLE") and x2 == ("*","OPERATOR") and x3 == ("42","NUMBER") and x4 == ("+","OPERATOR") and x5 == ("x","VARIABLE")
+
+def test_with_variable_in_an_expression_number_first():
+    x = lexer.lexer("5+cebola")
+    x1 = x.getnext()
+    x2 = x.getnext()
+    x3 = x.getnext()
+    assert x1 == ("5","NUMBER") and x2 == ("+","OPERATOR") and x3 == ("cebola","VARIABLE")
+
+def test_variable_with_attribution():
+    x = lexer.lexer("batata=5")
+    x1 = x.getnext()
+    x2 = x.getnext()
+    x3 = x.getnext()
+    assert x1 == ("batata","VARIABLE") and x2 == ("=","OPERATOR") and x3 == ("5","NUMBER")

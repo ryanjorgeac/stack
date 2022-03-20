@@ -42,6 +42,35 @@ def test_reverse_polish_notation_with_parentheses():
     assert pop1 == ("4", "NUMBER") and pop2 == ("5", "NUMBER") and pop3 == ("3", "NUMBER") and pop4 == ("-", "OPERATOR") and pop5 == ("*", "OPERATOR")
 
 
+def test_conversor_with_variable_on_lexer():
+    x = lexer.lexer("batata*4")
+    y = reverse_polish_notation.polish_notation_conversor(x)
+    pop1 = y.pop()
+    pop2 = y.pop()
+    pop3 = y.pop()
+    assert pop1 == ("batata","VARIABLE") and pop2 == ("4","NUMBER") and pop3 == ("*","OPERATOR")
+
+
+def test_conversor_with_operator_equals():
+    x = lexer.lexer("batata=4")
+    y = reverse_polish_notation.polish_notation_conversor(x)
+    pop1 = y.pop()
+    pop2 = y.pop()
+    pop3 = y.pop()
+    assert pop1 == ("batata", "VARIABLE") and pop2 == ("4", "NUMBER") and pop3 == ("=", "OPERATOR")
+
+def test_conversor_with_equals_and_more_operators():
+    x = lexer.lexer("batata=4*10+5")
+    y = reverse_polish_notation.polish_notation_conversor(x)
+    pop1 = y.pop()
+    pop2 = y.pop()
+    pop3 = y.pop()
+    pop4 = y.pop()
+    pop5 = y.pop()
+    pop6 = y.pop()
+    pop7 = y.pop()
+    assert pop1 == ("batata","VARIABLE") and pop2 == ("4","NUMBER") and pop3 == ("10","NUMBER") and pop4 == ("*","OPERATOR") and pop5 == ("5","NUMBER") and pop6 == ("+","OPERATOR") and pop7 == ("=","OPERATOR")
+
 def test_polish_notation_sum():
     x = stack.stack()
     x.push(("+", "OPERATOR"))
@@ -102,4 +131,12 @@ def test_polish_notation_with_subtraction():
     z = reverse_polish_notation.reverse_polish_notation_solver(x)
     assert z == 2
 
+def test_solver_with_variable():
+    env = {"batata":42}
+    x = stack.stack()
+    x.push(("+","OPERATOR"))
+    x.push(("4","NUMBER"))
+    x.push(("batata","VARIABLE"))
+    z = reverse_polish_notation.reverse_polish_notation_solver(x,env)
+    assert z == 46
 

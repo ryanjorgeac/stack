@@ -1,12 +1,15 @@
+import string
+
 class lexer():
     #s -> string
     def __init__(self,s):
         self.s = s
         self.state = 0
         self.digits = ["0","1","2","3","4","5","6","7","8","9"]
-        self.operators = ["+","-","*","/"]
+        self.operators = ["+","-","*","/","="]
         self.left_parentheses = ["("]
         self.right_parentheses = [")"]
+        self.letters = string.ascii_letters
 
 
     def getnext(self):
@@ -34,9 +37,19 @@ class lexer():
                 aux = i
                 self.state = 4
 
+            elif i in self.letters and self.state == 0:
+                aux = i
+                self.state = 5
+
+            elif i in self.letters and self.state == 5:
+                aux += i
+
+            elif i in self.digits and self.state == 5:
+                aux += i
+
+
             elif i == " " and self.state == 0:
                 continue
-
 
             else:
                 break
@@ -57,6 +70,10 @@ class lexer():
 
         elif self.state == 4:
             rc = (aux,"RIGHT_PARENTHESES")
+
+        elif self.state == 5:
+            rc = (aux,"VARIABLE")
+
 
         self.state = 0
 

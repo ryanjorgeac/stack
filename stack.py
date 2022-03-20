@@ -17,5 +17,5 @@ class stack():
     def __str__(self):
         stackStr = ""
         for i in range(len(self.l)-1,-1,-1):
-            stackStr+= f"{self.l[i]} "
+            stackStr += f"{self.l[i]} "
         return stackStr

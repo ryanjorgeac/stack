@@ -3,7 +3,7 @@ import transfer
 
 
 def precedencia(operator):
-    dicio = {"+":10,"*":8,"-":9,"/":8}
+    dicio = {"+":10,"*":8,"-":9,"/":8,"=":11}
     return dicio[operator]
 
 
@@ -12,7 +12,7 @@ def polish_notation_conversor(lexer):
     stackope = stack.stack()
     x = lexer.getnext()
     while x[1] != "END_OF_INPUT":
-        if x[1] == "NUMBER":
+        if x[1] == "NUMBER" or x[1] == "VARIABLE":
             stackout.push(x)
 
         elif x[1] == "OPERATOR":
@@ -25,6 +25,7 @@ def polish_notation_conversor(lexer):
                         y = stackope.pop()
                         stackout.push(y)
             stackope.push(x)
+
 
         elif x[1] == "LEFT_PARENTHESES":
             stackope.push(x)
@@ -47,7 +48,7 @@ def polish_notation_conversor(lexer):
     transfer.reverse_stack(stackout)
     return stackout
 
-def reverse_polish_notation_solver(stack_reversed):
+def reverse_polish_notation_solver(stack_reversed,env={}):
     def add(num1,num2):
         return num1+num2
 
@@ -68,6 +69,9 @@ def reverse_polish_notation_solver(stack_reversed):
         x = stack_reversed.pop()
         if x[1] == "NUMBER":
             numbers.push(int(x[0]))
+
+        elif x[1] == "VARIABLE":
+            numbers.push(env[x[0]])
 
         else:
             firstNumber = numbers.pop()

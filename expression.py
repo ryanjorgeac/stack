@@ -9,6 +9,6 @@ class expression():
     def value(self,string):
         x = lexer.lexer(string)
         y = reverse_polish_notation.polish_notation_conversor(x)
-        result = reverse_polish_notation.reverse_polish_notation_solver(y)
+        result = reverse_polish_notation.reverse_polish_notation_solver(y,self.env)
         return result
 
