@@ -1,6 +1,5 @@
 import stack
-import transfer
-
+import queue
 
 def precedencia(operator):
     dicio = {"+":10,"*":8,"-":9,"/":8,"=":11}
@@ -8,22 +7,23 @@ def precedencia(operator):
 
 
 def polish_notation_conversor(lexer):
-    stackout = stack.stack()
+    queueout = queue.queue()
     stackope = stack.stack()
     x = lexer.getnext()
     while x[1] != "END_OF_INPUT":
         if x[1] == "NUMBER" or x[1] == "VARIABLE":
-            stackout.push(x)
+            queueout.enqueue(x)
 
         elif x[1] == "OPERATOR":
-            if not stackope.isEmpty() and stackope.top()[1] == "OPERATOR":
+            while not stackope.isEmpty() and stackope.top()[1] == "OPERATOR":
                 topOperator = stackope.top()
-                opeValue = precedencia(topOperator[0])
-                newOpeValue = precedencia(x[0])
-                if opeValue < newOpeValue:
-                    while not stackope.isEmpty():
-                        y = stackope.pop()
-                        stackout.push(y)
+                topOpeValue = precedencia(topOperator[0])
+                xOpeValue = precedencia(x[0])
+                if topOpeValue < xOpeValue:
+                    y = stackope.pop()
+                    queueout.enqueue(y)
+                else:
+                    break
             stackope.push(x)
 
 
@@ -33,22 +33,21 @@ def polish_notation_conversor(lexer):
         elif x[1] == "RIGHT_PARENTHESES":
             while stackope.top()[1] != "LEFT_PARENTHESES":
                 y = stackope.pop()
-                stackout.push(y)
+                queueout.enqueue(y)
             stackope.pop()
 
         else:
-            return stackout
+            return queueout
         x = lexer.getnext()
 
 
     while not stackope.isEmpty():
         x = stackope.pop()
-        stackout.push(x)
+        queueout.enqueue(x)
 
-    transfer.reverse_stack(stackout)
-    return stackout
+    return queueout
 
-def reverse_polish_notation_solver(stack_reversed,env={}):
+def reverse_polish_notation_solver(newQueue,env={}):
     def add(num1,num2):
         return num1+num2
 
@@ -65,8 +64,8 @@ def reverse_polish_notation_solver(stack_reversed,env={}):
 
     numbers = stack.stack()
 
-    while not stack_reversed.isEmpty():
-        x = stack_reversed.pop()
+    while not newQueue.isEmpty():
+        x = newQueue.dequeue()
         if x[1] == "NUMBER":
             numbers.push(int(x[0]))
 
