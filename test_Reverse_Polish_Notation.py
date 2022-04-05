@@ -140,5 +140,23 @@ def test_solver_with_variable():
     z = reverse_polish_notation.reverse_polish_notation_solver(x,env)
     assert z == 46
 
+def test_solver_with_error_on_variables():
+    env = {}
+    x = queue.queue()
+    x.enqueue(("x", "VARIABLE"))
+    x.enqueue(("3", "NUMBER"))
+    x.enqueue(("=","OPERATOR"))
+    z = reverse_polish_notation.reverse_polish_notation_solver(x,env)
+    assert z == None
+
+def test_solver_with_error_on_variables_2():
+    env = {}
+    x = queue.queue()
+    x.enqueue(("x", "VARIABLE"))
+    x.enqueue(("3", "NUMBER"))
+    x.enqueue(("=", "OPERATOR"))
+    reverse_polish_notation.reverse_polish_notation_solver(x, env)
+    assert env["x"] == 3
+
 if __name__ == "__main__":
     test_polish_notation_sum()

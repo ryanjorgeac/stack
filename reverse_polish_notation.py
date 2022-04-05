@@ -48,19 +48,22 @@ def polish_notation_conversor(lexer):
     return queueout
 
 def reverse_polish_notation_solver(newQueue,env={}):
-    def add(num1,num2):
+    def add(num1,num2,env):
         return num1+num2
 
-    def multiply(num1,num2):
+    def multiply(num1,num2,env):
         return num1*num2
 
-    def subtract(num1,num2):
+    def subtract(num1,num2,env):
         return num2-num1
 
-    def divide(num1,num2):
+    def divide(num1,num2,env):
         return num1/num2
 
-    operators = {"+":add,"*":multiply,"-":subtract,"/":divide}
+    def assign(num1,num2,env):
+
+
+    operators = {"+":add,"*":multiply,"-":subtract,"/":divide,"=":assign}
 
     numbers = stack.stack()
 
@@ -70,7 +73,7 @@ def reverse_polish_notation_solver(newQueue,env={}):
             numbers.push(int(x[0]))
 
         elif x[1] == "VARIABLE":
-            numbers.push(env[x[0]])
+            numbers.push([x[0]])
 
         else:
             firstNumber = numbers.pop()
