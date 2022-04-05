@@ -107,16 +107,16 @@ def test_polish_notation_minus2():
 
 def test_polish_notation_division():
     x = queue.queue()
-    x.enqueue(("2","NUMBER"))
     x.enqueue(("6","NUMBER"))
+    x.enqueue(("2","NUMBER"))
     x.enqueue(("/","OPERATOR"))
     z = reverse_polish_notation.reverse_polish_notation_solver(x)
     assert z == 3
 
 def test_polish_notation_division2():
     x = queue.queue()
-    x.enqueue(("9", "NUMBER"))
     x.enqueue(("81", "NUMBER"))
+    x.enqueue(("9", "NUMBER"))
     x.enqueue(("/","OPERATOR"))
     z = reverse_polish_notation.reverse_polish_notation_solver(x)
     assert z == 9
@@ -139,6 +139,7 @@ def test_solver_with_variable():
     x.enqueue(("+","OPERATOR"))
     z = reverse_polish_notation.reverse_polish_notation_solver(x,env)
     assert z == 46
+
 
 def test_solver_with_error_on_variables():
     env = {}

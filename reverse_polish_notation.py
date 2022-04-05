@@ -5,6 +5,14 @@ def precedencia(operator):
     dicio = {"+":10,"*":8,"-":9,"/":8,"=":11}
     return dicio[operator]
 
+def secondEager(functionf):
+    def wrapper(x,y,*args):
+        env=args[-1]
+        if isinstance(y,str):
+            y=env[y]
+        return functionf(x,y,*args)
+    return wrapper
+
 
 def polish_notation_conversor(lexer):
     queueout = queue.queue()
@@ -48,20 +56,35 @@ def polish_notation_conversor(lexer):
     return queueout
 
 def reverse_polish_notation_solver(newQueue,env={}):
+    @secondEager
     def add(num1,num2,env):
+        if isinstance(num1, str):
+            num1 = env[num1]
         return num1+num2
 
+
+    @secondEager
     def multiply(num1,num2,env):
+        if isinstance(num1, str):
+            num1 = env[num1]
         return num1*num2
 
+    @secondEager
     def subtract(num1,num2,env):
+        if isinstance(num1, str):
+            num1 = env[num1]
         return num2-num1
 
+    @secondEager
     def divide(num1,num2,env):
-        return num1/num2
+        if isinstance(num1, str):
+            num1 = env[num1]
+        return num2/num1
 
     def assign(num1,num2,env):
-
+        if isinstance(num1, str):
+            num1 = env[num1]
+        env[num2]=num1
 
     operators = {"+":add,"*":multiply,"-":subtract,"/":divide,"=":assign}
 
@@ -73,13 +96,15 @@ def reverse_polish_notation_solver(newQueue,env={}):
             numbers.push(int(x[0]))
 
         elif x[1] == "VARIABLE":
-            numbers.push([x[0]])
+            numbers.push(x[0])
 
         else:
             firstNumber = numbers.pop()
             secondNumber = numbers.pop()
-            operation = operators[x[0]](firstNumber,secondNumber)
+            operation = operators[x[0]](firstNumber,secondNumber,env)
             numbers.push(operation)
 
     result = numbers.pop()
+    if isinstance(result, str):
+        result = env[result]
     return result
